@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <title>{% block title %}Bibliopolium{% endblock %}</title>
+</head>
+<body>
+
+<header class="navbar bg-primary">
+    <section class="navbar-section">
+        <a href="{% url 'home' %}" class="navbar-brand mr-2 text-bold  text-secondary">Bibliopolium</a>
+        <a href="{% url 'load_troa' %}" class="btn btn-link  text-secondary">Cargar Troa</a>
+        <a href="{% url 'load_botica' %}" class="btn btn-link  text-secondary">Cargar Botica</a>
+        <a href="{% url 'stats' %}" class="btn btn-link  text-secondary">Estadisticas</a>
+    </section>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
+

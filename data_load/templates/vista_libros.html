@@ -1,0 +1,41 @@
+<!-- vista_libros.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Lista de Libros{% endblock %}
+
+{% block content %}
+
+<h2>Lista de Libros</h2>
+<ul class="pagination">
+{% for page in books.paginator.page_range %}
+    {% if books.number == page %}
+        <li class="page-item active">
+            <a href="#">{{ page }}</span>
+        </li>
+    {% else %}
+        <li class="page-item">
+            <a  href="?page={{ page }}">{{ page }}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+</ul>
+<div class="columns">
+    {% for book in books %}
+        <div class="column col-3">
+            <a href="#">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{ book.image }}" alt="{{ book.title }}" class="img-responsive fit-cover">
+                    </div>
+                    <div class="card-header">
+                        <h4 class="card-title">{{ book.title }}</h4>
+                        <p class="card-subtitle">{{ book.author }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

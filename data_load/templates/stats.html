@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Estadisticas{% endblock %}
+
+{% block content %}
+<div class="hero-sm">
+    <div class="hero-body">
+        <h2>Libros por Fuente:</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="text-large text-bold">
+                    <th>Fuente</th>
+                    <th>Número de Libros</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for source, num_books in by_source.items %}
+                    <tr>
+                        <td>{{ source }}</td>
+                        <td>{{ num_books }}</td>
+                    </tr>
+                {% endfor %}
+                    <tr class="text-bold">
+                        <td>Total</td>
+                        <td>{{ total }}</td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
