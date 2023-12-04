@@ -23,10 +23,10 @@
 <div class="columns">
     {% for book in books %}
         <div class="column col-3">
-            <a href="#">
-                <div class="card">
+            <a href="{% url 'ficha_libro' id=book.id %}">
+                <div class="card" style="height: 15rem;">
                     <div class="card-image">
-                        <img src="{{ book.image }}" alt="{{ book.title }}" class="img-responsive fit-cover">
+                        <img src="{{ book.image }}" alt="{{ book.title }}" class="img-responsive fit-cover" style="max-width: 7rem; max-height: 7rem;">
                     </div>
                     <div class="card-header">
                         <h4 class="card-title">{{ book.title }}</h4>

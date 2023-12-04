@@ -12,7 +12,7 @@ class Book(models.Model):
     image = models.URLField(null=True)
     source = models.CharField(max_length=32)
     categories = models.TextField(null=True)
-    isbn = models.IntegerField(null=True)
+    isbn = models.TextField(null=True)
     last_updated = models.DateTimeField(default=datetime.now)
 
     def __str__(self):

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Ficha {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+            <h2 class="text-center">{{ book.title }}</h2>
+            <p class="text-center">{{ book.author }}</p>
+
+            <div class="divider"></div>
+
+            <div class="columns">
+                <div class="column col-6">
+                    <img src="{{ book.image }}" alt="{{ book.title }}" class="img-responsive">
+                </div>
+                <div class="column col-6">
+                    <h3>Sinopsis</h3>
+                    <p>{{ book.synopsis }}</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Precio: {{ book.price }} €</p>
+            <p>Puntuación: {{ book.score }}</p>
+            <p>ISBN: {{ book.isbn }}</p>
+            <p>Categorías: {{book.categories}}</p>
+            <a href="{{ book.url }}" class="btn btn-primary" target="_blank">{{book.source}}</a>
+
+            <div class="divider"></div>
+
+            <p>Última actualización: {{ book.last_updated }}</p>
+
+            <div class="divider"></div>
+        </div>
+    </div>
+    <div class="menu">
+        <a href="{% url 'update' id=book.id %}" class="btn btn-link  bg-dark text-light  p-centered">Actualizar</a>
+    </div>
+</div>
+{% endblock %}
