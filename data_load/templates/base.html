@@ -13,10 +13,27 @@
 <header class="navbar bg-primary">
     <section class="navbar-section px-2">
         <a href="{% url 'home' %}" class="navbar-brand mr-2 text-bold  text-secondary px-2">Bibliopolium</a>
-        <a href="{% url 'load_troa' %}" class="btn btn-link  text-secondary">Cargar Troa</a>
-        <a href="{% url 'load_botica' %}" class="btn btn-link  text-secondary">Cargar Botica</a>
-        <a href="{% url 'load_palas' %}" class="btn btn-link  text-secondary">Cargar Palas</a>
-        <a href="{% url 'stats' %}" class="btn btn-link  text-secondary">Estadisticas</a>
+        <div class="dropdown">
+            <a href="#" class="btn btn-primary dropdown-toggle" tabindex="0">
+                Load perations <i class="icon icon-caret"></i></a>
+            <ul class="menu">
+                <li class="menu-item"><a href="{% url 'load_tags' %}" class="btn btn-link  text-primary">Load tags</a></li>
+                <li class="menu-item"><a href="{% url 'load_reviewers' %}" class="btn btn-link  text-primary">Load Reviewers</a></li>
+                <li class="menu-item"><a href="{% url 'load_full_reviews' %}" class="btn btn-link  text-primary">Load Reviews</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <a href="#" class="btn btn-primary dropdown-toggle" tabindex="0">
+                List operations <i class="icon icon-caret"></i></a>
+                <ul class="menu">
+                    <li class="menu-item"><a href="{% url 'list_tags' %}" class="btn btn-link  text-primary">Categories</a></li>
+                    <li class="menu-item"><a href="{% url 'list_reviews' %}" class="btn btn-link  text-primary">List Reviews</a></li>
+                    <li class="menu-item"><a href="{% url 'list_reviewers' %}" class="btn btn-link  text-primary">List Reviewers</a></li>
+                    <li class="menu-item"><a href="{% url 'stats' %}" class="btn btn-link  text-primary">Stats</a></li>
+                    <li class="menu-item"><a href="{% url 'list_books_without_categories' %}" class="btn btn-link  text-primary">Books with no categories</a></li>
+                </ul>
+        </div>
+
     </section>
 </header>
 

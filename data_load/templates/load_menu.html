@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Load operations{% endblock %}
+
+{% block content %}
+<div class="container">
+    <p>The order of operations must be load categories, load reviewers and load full reviews</p>
+    <div class="dropdown">
+        <a href="#" class="btn btn-primary dropdown-toggle" tabindex="0">
+            Operations <i class="icon icon-caret"></i></a>
+        <ul class="menu">
+            <li class="menu-item"><a href="{% url 'load_tags' %}">Load tags</a></li>
+            <li class="menu-item"><a href="{% url 'load_reviewers' %}">Load Reviewers</a></li>
+            <li class="menu-item"><a href="{% url 'load_full_reviews' %}">Load Reviews</a></li>
+            <li class="menu-item"><a href="{% url 'load_book_tags' %}">Load book tags</a></li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}

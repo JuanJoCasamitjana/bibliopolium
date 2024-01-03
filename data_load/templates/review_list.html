@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Reviews{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Reviews</h2>
+    <ul class="pagination">
+        {% if reviews.has_previous %}
+            <li class="page-item">
+                <a href="?page=1">&laquo;&laquo;</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ reviews.previous_page_number }}">{{ reviews.previous_page_number }}</a>
+            </li>
+        {% endif %}
+    
+            <li class="page-item active">
+                <a href="#">{{ reviews.number }}</a>
+            </li>
+    
+        {% if reviews.has_next %}
+            <li class="page-item">
+                <a href="?page={{ reviews.next_page_number }}">{{ reviews.next_page_number }}</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ reviews.paginator.num_pages }}">&raquo;&raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr class="text-large text-bold">
+                <th>Author of review</th>
+                <th>Book</th>
+                <th>Score</th>
+                <th>Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+                <tr>
+                    <td><a class="btn btn-link" href="{% url 'reviewer_details' id=review.reviewer.id %}">{{ review.reviewer.name }}</a></td>
+                    <td><p class="text-italic"><a href="{% url 'ficha_libro' id=review.book.id %}">{{ review.book.title }}</a></p> by {{ review.book.author }}</td>
+                    <td>{{ review.score }}</td>
+                    <td><a class="btn" href="{% url 'review_details' id=review.id %}">Details</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

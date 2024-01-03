@@ -2,24 +2,35 @@
 
 {% extends 'base.html' %}
 
-{% block title %}Lista de Libros{% endblock %}
+{% block title %}Book list{% endblock %}
 
 {% block content %}
 
-<h2>Lista de Libros</h2>
+<h2>Book list</h2>
 <ul class="pagination">
-{% for page in books.paginator.page_range %}
-    {% if books.number == page %}
-        <li class="page-item active">
-            <a href="#">{{ page }}</span>
-        </li>
-    {% else %}
+    {% if books.has_previous %}
         <li class="page-item">
-            <a  href="?page={{ page }}">{{ page }}</a>
+            <a href="?page=1">&laquo;&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a href="?page={{ books.previous_page_number }}">{{ books.previous_page_number }}</a>
         </li>
     {% endif %}
-{% endfor %}
+
+        <li class="page-item active">
+            <a href="#">{{ books.number }}</a>
+        </li>
+
+    {% if books.has_next %}
+        <li class="page-item">
+            <a href="?page={{ books.next_page_number }}">{{ books.next_page_number }}</a>
+        </li>
+        <li class="page-item">
+            <a href="?page={{ books.paginator.num_pages }}">&raquo;&raquo;</a>
+        </li>
+    {% endif %}
 </ul>
+
 <div class="columns">
     {% for book in books %}
         <div class="column col-3">

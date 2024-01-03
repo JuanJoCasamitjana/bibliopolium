@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Reviewer: {{reviewer.name}}</h1>
+    <h2>Bio:</h2>
+    <p>{{reviewer.bio}}</p>
+    <div class="container">
+        <h3>Total reviews: {{reviews.total}}</h3>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="text-large text-bold">
+                    <th>Book</th>
+                    <th>Score</th>
+                    <th>Info</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews.list %}
+                    <tr>
+                        <td><a href="{% url 'ficha_libro' id=review.book.id %}">
+                            <p class="text-italic">{{ review.book.title }}</p>
+                        </a> by {{ review.book.author }}</td>
+                        <td>{{ review.score }}</td>
+                        <td><a class="btn" href="{% url 'review_details' id=review.id %}">Details</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

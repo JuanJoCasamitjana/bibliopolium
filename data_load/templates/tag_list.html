@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Tag List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Categories</h2>
+    <table class="table table-striped table-hover">
+        <h3 class="text-bold">Total categories: {{ count }}   Total books: {{ book_count }}</h3>
+        <thead>
+            <tr class="text-large text-bold">
+                <th>Name</th>
+                <th>Book count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag_and_info in tags %}
+                <tr>
+                    <td><a href="{% url 'list_by_category' id=tag_and_info.tag.id %}">{{ tag_and_info.tag.name }}</a></td>
+                    <td>{{ tag_and_info.book_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

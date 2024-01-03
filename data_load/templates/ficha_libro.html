@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Ficha {{ book.title }}{% endblock %}
+{% block title %} {{ book.title }}{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="columns">
-        <div class="column col-6 col-mx-auto">
+        <div class="container">
             <h2 class="text-center">{{ book.title }}</h2>
             <p class="text-center">{{ book.author }}</p>
-
+            <p>Last updated: {{ book.last_updated }}</p>
             <div class="divider"></div>
 
             <div class="columns">
@@ -16,28 +16,59 @@
                     <img src="{{ book.image }}" alt="{{ book.title }}" class="img-responsive">
                 </div>
                 <div class="column col-6">
-                    <h3>Sinopsis</h3>
+                    <h3>Synopsis</h3>
                     <p>{{ book.synopsis }}</p>
+                    <a href="{% url 'review_details' id=book.review_set.first.id %}" class="btn btn-secondary">Review</a>
                 </div>
             </div>
 
             <div class="divider"></div>
-
-            <p>Precio: {{ book.price }} €</p>
-            <p>Puntuación: {{ book.score }}</p>
-            <p>ISBN: {{ book.isbn }}</p>
-            <p>Categorías: {{book.categories}}</p>
-            <a href="{{ book.url }}" class="btn btn-primary" target="_blank">{{book.source}}</a>
+            <a href="{{ book.url }}" class="btn btn-primary" target="_blank">Source</a>
 
             <div class="divider"></div>
-
-            <p>Última actualización: {{ book.last_updated }}</p>
-
+            <div class="columns">
+                <div class="column col-6">
+                    <h4>Similar books</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Similar to</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book_similar in alike.similarities.all %}
+                            <tr>
+                                <td><a href="{% url 'ficha_libro' id=book_similar.id %}">
+                                    <p class="text-italic">{{ book_similar.title }}</p>
+                                </a> by {{ book_similar.author }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="column col-6">
+                    <h4>Categories</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tag in book.categories.all %}
+                            <tr>
+                                <td><a href="{% url 'list_by_category' id=tag.id %}">{{tag.name}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="divider"></div>
         </div>
     </div>
     <div class="menu">
-        <a href="{% url 'update' id=book.id %}" class="btn btn-link  bg-dark text-light  p-centered">Actualizar</a>
+        
     </div>
 </div>
 {% endblock %}
