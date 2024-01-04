@@ -10,9 +10,10 @@ def load_similarities():
     book_categories = top_book_categories()
     #reviewer_books = top_reviewers_books(book_categories)
     reviewer_categories = reviewer_top_categories()
+    scores_by_book = book_scores()
     #reviewer_book_scores = get_reviewer_book_scores()
     #shelf['similarities'] = compute_similarities(book_categories, reviewer_books)
-    shelf['similarities'] = compute_similarities2(book_categories, reviewer_categories)
+    shelf['similarities'] = compute_similarities2(book_categories, reviewer_categories,scores_by_book)
     shelf['top_categories'] = reviewer_categories
     shelf.close()
 
@@ -111,11 +112,18 @@ def reviewer_top_categories():
         top_categories_dict[reviewerId] = set(category_id for category_id, _ in category_counter.most_common(5))
     return top_categories_dict
 
-def compute_similarities2(book_categories, reviewer_categories):
+def compute_similarities2(book_categories, reviewer_categories, scores_by_book):
     res = {}
     for r in reviewer_categories:
         top_books = {}
         for b in book_categories:
-            top_books[b] = jaccard_coefficient(reviewer_categories[r], book_categories[b])
+            top_books[b] = jaccard_coefficient(reviewer_categories[r], book_categories[b]) * scores_by_book[b]
         res[r] = Counter(top_books).most_common(20)
+    return res
+
+def book_scores():
+    reviews = Review.objects.select_related('book').all()
+    res = dict()
+    for review in reviews:
+        res[review.book.id] = float(review.score)/5.0
     return res
