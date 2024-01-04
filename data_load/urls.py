@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from .views import  home, stats, ficha_libro, load_tags, list_tags, load_books_of_tag, delete_all_books, load_reviewers, list_reviews, load_full_reviews, review_details, reviewer_details, list_reviewers, load_book_tags, list_books_without_categories, list_by_category, load_menu, update_review_and_book
-
+from .views import  home, stats, ficha_libro, load_tags, list_tags, load_books_of_tag, delete_all_books, load_reviewers, list_reviews
+from .views import  load_full_reviews, review_details, reviewer_details, list_reviewers, load_book_tags, list_books_without_categories
+from .views import list_by_category, load_menu, update_review_and_book, load_whoosh_index, instructions, load_recommendation
+from .views import recommend_book
 urlpatterns = [
     path('ficha-libro/<int:id>', ficha_libro, name="ficha_libro"),
     path('stats/', stats, name="stats"),
@@ -20,5 +22,9 @@ urlpatterns = [
     path('list-books-by-category/<int:id>', list_by_category, name="list_by_category"),
     path('load-operations/', load_menu, name="load_menu"),
     path('review-update/<int:id>', update_review_and_book, name="update_review_and_book"),
+    path('load-whoosh/', load_whoosh_index, name="load_whoosh_index"),
+    path('instructions/', instructions, name="instructions"),
+    path('load-recommendation/', load_recommendation, name="load_recommendation"),
+    path('reviewer-recommend/<int:id>', recommend_book, name="recommend_book"),
     path('', home, name="home")
 ]

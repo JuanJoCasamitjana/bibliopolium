@@ -39,7 +39,7 @@ class Review(models.Model):
     score = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     last_updated = models.DateTimeField(default=datetime.now)
     reviewer = models.ForeignKey(Reviewer, null=True, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, null=True, on_delete=models.CASCADE)
+    book = models.OneToOneField(Book, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         if self.reviewer != None and self.reviewer.name:
@@ -47,5 +47,5 @@ class Review(models.Model):
         return f"Review {self.id}"
 
 class Alike(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='similar_to')
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='similar_to')
     similarities = models.ManyToManyField(Book)

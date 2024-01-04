@@ -4,7 +4,26 @@
 <div class="container">
     <h1>Reviewer: {{reviewer.name}}</h1>
     <h2>Bio:</h2>
-    <p>{{reviewer.bio}}</p>
+    <div class="container">
+        <div class="columns">
+            <div class="column col-6">
+                <p>{{reviewer.bio}}</p>
+            </div>
+            <div class="column col-6">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr><th>Top Categories</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for cat in top_categories %}
+                        <tr><td><a href="{% url 'list_by_category' id=cat.id %}">{{cat.name}}</a></td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'recommend_book' id=reviewer.id %}" class="btn btn-secondary">Recommend</a>
     <div class="container">
         <h3>Total reviews: {{reviews.total}}</h3>
         <table class="table table-striped table-hover">

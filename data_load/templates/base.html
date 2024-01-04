@@ -15,11 +15,13 @@
         <a href="{% url 'home' %}" class="navbar-brand mr-2 text-bold  text-secondary px-2">Bibliopolium</a>
         <div class="dropdown">
             <a href="#" class="btn btn-primary dropdown-toggle" tabindex="0">
-                Load perations <i class="icon icon-caret"></i></a>
+                Load operations <i class="icon icon-caret"></i></a>
             <ul class="menu">
                 <li class="menu-item"><a href="{% url 'load_tags' %}" class="btn btn-link  text-primary">Load tags</a></li>
                 <li class="menu-item"><a href="{% url 'load_reviewers' %}" class="btn btn-link  text-primary">Load Reviewers</a></li>
                 <li class="menu-item"><a href="{% url 'load_full_reviews' %}" class="btn btn-link  text-primary">Load Reviews</a></li>
+                <li class="menu-item"><a href="{% url 'load_whoosh_index' %}" class="btn btn-link  text-primary">Load Whoosh Index</a></li>
+                <li class="menu-item"><a href="{% url 'load_recommendation' %}" class="btn btn-link  text-primary">Load Recommendations</a></li>
             </ul>
         </div>
         <div class="dropdown">
@@ -33,6 +35,7 @@
                     <li class="menu-item"><a href="{% url 'list_books_without_categories' %}" class="btn btn-link  text-primary">Books with no categories</a></li>
                 </ul>
         </div>
+        <a href="{% url 'instructions' %}" class="btn btn-primary">Instructions</a>
 
     </section>
 </header>

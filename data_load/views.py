@@ -1,13 +1,33 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from .models import Book, Category, Reviewer, Review, Alike
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .utils import get_tags, get_books_of_tag, get_reviewers, get_review, get_book_tags
+from .utils import get_tags, get_books_of_tag, get_reviewers, get_review, get_book_tags, get_as_keywords
 from .forms import LoadOfTagForm, LoadReviewersForm, LoadReviewsForm, LoadBookTagsForm
 from threading import Thread
+from whoosh.index import create_in
+from whoosh.fields import TEXT, ID, Schema, DATETIME, KEYWORD, NUMERIC
+from whoosh.qparser import QueryParser, MultifieldParser
+from whoosh.qparser.dateparse import DateParserPlugin
+from whoosh.query import Term
+from whoosh import qparser
+from whoosh.index import open_dir
+from .recommendations import load_similarities, recommend_books, top_categories_reviewer
+import shelve
 # Create your views here.
 
-
+directory='./schema_index'
+sch = Schema(
+    bookId=NUMERIC(stored=True,numtype=int),
+    reviewId=NUMERIC(stored=True,numtype=int),
+    reviewerId=NUMERIC(stored=True,numtype=int),
+    title=TEXT(),
+    author=TEXT(),
+    synopsis=KEYWORD(stored=True, commas=True),
+    reviewText=KEYWORD(stored=True, commas=True),
+    score=NUMERIC(stored=True,numtype=float)
+    )
 
 
 def home(request):
@@ -114,11 +134,19 @@ def load_reviewers(request):
                 thread.start() '''
                 get_reviewers(indexes)
             if option == 'Unchecked':
-                checked = Reviewer.objects.values_list('bookBrowseID', flat=True)
-                unchecked = [i for i in range(2,170) if i not in checked]
+                with shelve.open('unchecked') as db:
+                    print(db['error'])
+                    print(db['not_found'])
+                    error_data = db.get('error', set())
+                    if 'error' not in db:
+                        db['error'] = error_data
+                    elif 'error' in db and not error_data:
+                        error_data = set()
+                        db['error'] = error_data
+                    print(error_data)
+                    get_reviewers(error_data)
                 ''' thread = Thread(target=get_reviewers,args=(unchecked,))
                 thread.start() '''
-                get_reviewers(unchecked)
             return redirect('home')
     else:
         form = LoadReviewersForm()
@@ -170,7 +198,8 @@ def reviewer_details(request, id):
     reviews = dict()
     reviews['total'] = len(reviews_list)
     reviews['list'] = reviews_list
-    return render(request, 'reviewer_details.html', {'reviewer': reviewer, 'reviews':reviews})
+    top_categories = top_categories_reviewer(reviewer)
+    return render(request, 'reviewer_details.html', {'reviewer': reviewer, 'reviews':reviews, 'top_categories':top_categories})
 
 def list_reviewers(request):
     reviewers_list = Reviewer.objects.all()
@@ -212,3 +241,44 @@ def update_review_and_book(request, id):
     review = get_object_or_404(Review, pk=id)
     get_review(review.url)
     return redirect('review_details', id=id)
+
+def load_whoosh_index(request):
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+    whoosh_index = create_in(directory, sch)
+    reviews = Review.objects.all()
+    k=0
+    objs = len(reviews)
+    for review in reviews:
+        writer = whoosh_index.writer()
+        writer.add_document(
+            bookId=review.book.pk,
+            reviewId=review.pk,
+            reviewerId=review.reviewer.pk,
+            title=review.book.title,
+            author=review.book.author,
+            synopsis=get_as_keywords(review.book.synopsis),
+            reviewText=get_as_keywords(review.text),
+            score=float(review.score)
+        )
+        writer.commit()
+        k=k+1
+        print(f"{k} de {objs} procesados: Review {review.pk} by {review.reviewer.name}")
+    with whoosh_index.searcher() as searcher:
+        query = qparser.QueryParser("reviewId", sch).parse('*')
+        results = list(searcher.search(query, limit=None))
+        num_entries = len(results)
+    return render(request, 'whoosh_load.html', {'num_entries':num_entries})
+
+
+def instructions(request):
+    return render(request, 'instructions.html')
+
+def load_recommendation(request):
+    load_similarities()
+    return redirect('home')
+
+def recommend_book(request, id):
+    reviewer = Reviewer.objects.get(pk=id)
+    books = recommend_books(reviewer)
+    return render(request, 'recommended_books.html', {'books':books, 'reviewer': reviewer})

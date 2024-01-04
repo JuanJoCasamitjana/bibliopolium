@@ -4,6 +4,7 @@
 <div class="container">
     <h1>Reviewer: <a href="{% url 'reviewer_details' id=review.reviewer.id %}">{{review.reviewer.name}}</a></h1>
     <h3>Book: <a href="{% url 'ficha_libro' id=review.book.id %}">{{review.book.title}} by {{review.book.author}}</a></h3>
+    <p>Last updated: {{ review.last_updated }}</p>
     <a href="{% url 'update_review_and_book' id=review.id %}" class="btn btn-primary">Update</a>
     <p>{{ review.text }}</p>
 </div>

@@ -18,7 +18,7 @@
                 <div class="column col-6">
                     <h3>Synopsis</h3>
                     <p>{{ book.synopsis }}</p>
-                    <a href="{% url 'review_details' id=book.review_set.first.id %}" class="btn btn-secondary">Review</a>
+                    <a href="{% url 'review_details' id=book.review.id %}" class="btn btn-secondary">Review</a>
                 </div>
             </div>
 

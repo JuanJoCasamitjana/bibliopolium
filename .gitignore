@@ -9,6 +9,9 @@ media
 # Backup files # 
 *.bak 
 
+# Shelf files #
+*.dat
+*.dir
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -111,6 +114,8 @@ venv.bak/
 # mypy 
 .mypy_cache/ 
 
+# whoosh
+schema_index/
 # Sublime Text # 
 *.tmlanguage.cache 
 *.tmPreferences.cache 
