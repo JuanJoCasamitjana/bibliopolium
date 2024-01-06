@@ -50,7 +50,7 @@ def compute_similarities(book_categories, reviewer_books):
     for r in reviewer_books:
         top_books = {}
         for b in book_categories:
-            top_books[b] = jaccard_coefficient(reviewer_books[r], book_categories[b])
+            top_books[b] = coefficient(reviewer_books[r], book_categories[b])
         res[r] = Counter(top_books).most_common(20)
     return res
 
@@ -80,7 +80,7 @@ def top_reviewers_books(book_categories):
                 previous = e['id']
     return reviewers
 
-def jaccard_coefficient(set1, set2):
+def coefficient(set1:set, set2:set):
     return len(set1.intersection(set2)) / len(set1.union(set2))
 
 def get_reviewer_book_scores():
@@ -117,8 +117,8 @@ def compute_similarities2(book_categories, reviewer_categories, scores_by_book):
     for r in reviewer_categories:
         top_books = {}
         for b in book_categories:
-            top_books[b] = jaccard_coefficient(reviewer_categories[r], book_categories[b]) * scores_by_book[b]
-        res[r] = Counter(top_books).most_common(20)
+            top_books[b] = coefficient(reviewer_categories[r], book_categories[b]) * scores_by_book[b]
+        res[r] = Counter(top_books).most_common(10)
     return res
 
 def book_scores():

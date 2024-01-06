@@ -9,6 +9,9 @@ media
 # Backup files # 
 *.bak 
 
+# prueba.py
+prueba.py
+
 # Shelf files #
 *.dat
 *.dir
