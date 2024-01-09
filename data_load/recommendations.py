@@ -23,6 +23,8 @@ def recommend_books(reviewer: Reviewer):
     if reviews:
         shelf = shelve.open("dataRS.dat")
         # conjunto de libros que ya ha revisado el revisor, que no se consideran para recomendar
+        if 'similarities' not in shelf:
+            return res
         reviewed_books = set(review.book.id for review in reviews)
         for book_id, score in shelf['similarities'][reviewer.id]:
             if book_id not in reviewed_books:

@@ -7,66 +7,104 @@
     <h1>How to use this application</h1>
     <div class="container">
         <h2>English</h2>
-        <ol>
-            <li class="text-bold">Load operations -> Load tags:
-                <div class="container">
-                    <p class="text-normal">Loads tags and categories of the books, but not the books</p>
-                    <p class="text-normal">This is non destructive and takes a couple of seconds</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load reviewers:
-                <div class="container">
-                    <p class="text-normal">It will make a full load of the reviewers information and a partial load of reviews and books</p>
-                    <p class="text-normal">Options to load all or only the unchecked</p>
-                    <p class="text-normal">This will take about 5min if you are loading all</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load reviews:
-                <div class="container">
-                    <p class="text-normal">Loads full information of the books and reviews</p>
-                    <p class="text-normal">This can take upto 5h as it loads the book information and the review information</p>
-                    <p class="text-normal">Tags can only be assigned if the have been loaded first</p>
-                    <p class="text-normal">The scrape order is based on when it was last updated from oldest to newest</p>
-                    <p class="text-normal">Books and reviews can be individually updated by from their review details page</p>
-                    <p class="text-normal">You can take a look on the maximum number of scrapable objects in the "List operations -> Stats" page</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load whoosh:
-                <div class="container">
-                    <p class="text-normal">Loads the whoosh index with the information in the database</p>
-                </div>
-            </li>
-        </ol>
+        <div class="panel text-large bg-primary">
+            <ol>
+                <li class="text-bold">Load operations -> Load tags:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Loads tags and categories of the books, but not the books</p>
+                            <p class="text-normal">This is non destructive and takes a couple of seconds</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load reviewers:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">It will make a full load of the reviewers information and a partial load of reviews and books</p>
+                            <p class="text-normal">Options to load all or only the unchecked</p>
+                            <p class="text-normal">This will take about 5min if you are loading all</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load reviews:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Loads full information of the books and reviews</p>
+                            <p class="text-normal">This can take upto 5h as it loads the book information and the review information</p>
+                            <p class="text-normal">Tags can only be assigned if the have been loaded first</p>
+                            <p class="text-normal">The scrape order is based on when it was last updated from oldest to newest</p>
+                            <p class="text-normal">Books and reviews can be individually updated by from their review details page</p>
+                            <p class="text-normal">You can take a look on the maximum number of scrapable objects in the "List operations -> Stats" page</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load whoosh:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Loads the whoosh index with the information in the database</p>
+                            <p class="text-normal">Whoosh is not used in any of the functionalities of this project so this step is not necessary</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load Recommendations:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Loads the recommendation system</p>
+                            <p class="text-normal">It uses the Jaccard coefficient to compare the top 5 categories of each reviewer with those of each book</p>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
         <h2>Español</h2>
-        <ol>
-            <li class="text-bold">Load operations -> Load tags:
-                <div class="container">
-                    <p class="text-normal">Carga las etiquetas o categorías de los libros, pero no los libros</p>
-                    <p class="text-normal">Esto no es destructivo y toma unos segundos</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load reviewers:
-                <div class="container">
-                    <p class="text-normal">Esto tomará alrededor de 5 minutos si estás cargando todos</p>
-                    <p class="text-normal">Realizará una carga completa de la información de los revisores y una carga parcial de revisiones y libros</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load reviews:
-                <div class="container">
-                    <p class="text-normal">Carga la informacón completa de las revisiones y los libros</p>
-                    <p class="text-normal">Esto puede tardar hasta 5 horas, ya que carga la información del libro y de la revisión</p>
-                    <p class="text-normal">Las etiquetas solo pueden asignarse si se han cargado primero</p>
-                    <p class="text-normal">El orden del scraping se basa en cuándo se actualizó por última vez, de lo más antiguo a lo más nuevo</p>
-                    <p class="text-normal">Los libros y revisiones se pueden actualizar individualmente desde su página de detalles de revisión</p>
-                    <p class="text-normal">Puedes ver el número máximo de objetos scrapeables en la página "List operations -> Stats"</p>
-                </div>
-            </li>
-            <li class="text-bold">Load operations -> Load whoosh:
-                <div class="container">
-                    <p class="text-normal">Carga el indice the whoosh con la información guardada en la base de datos</p>
-                </div>
-            </li>
-        </ol>
+        <div class="panel text-large bg-primary">
+            <ol>
+                <li class="text-bold">Load operations -> Load tags:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Carga las etiquetas o categorías de los libros, pero no los libros</p>
+                            <p class="text-normal">Esto no es destructivo y toma unos segundos</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load reviewers:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Esto tomará alrededor de 5 minutos si estás cargando todos</p>
+                            <p class="text-normal">Realizará una carga completa de la información de los revisores y una carga parcial de revisiones y libros</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load reviews:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Carga la informacón completa de las revisiones y los libros</p>
+                            <p class="text-normal">Esto puede tardar hasta 5 horas, ya que carga la información del libro y de la revisión</p>
+                            <p class="text-normal">Las etiquetas solo pueden asignarse si se han cargado primero</p>
+                            <p class="text-normal">El orden del scraping se basa en cuándo se actualizó por última vez, de lo más antiguo a lo más nuevo</p>
+                            <p class="text-normal">Los libros y revisiones se pueden actualizar individualmente desde su página de detalles de revisión</p>
+                            <p class="text-normal">Puedes ver el número máximo de objetos scrapeables en la página "List operations -> Stats"</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load whoosh:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Carga el indice the whoosh con la información guardada en la base de datos</p>
+                            <p class="text-normal">Whoosh no se usa en ninguna de las funcionalidades de este proyect por lo que este paso no es necesario</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-bold">Load operations -> Load Recommendations:
+                    <div class="panel bg-dark mx-2">
+                        <div class="container">
+                            <p class="text-normal">Carga el sistema de recomendación</p>
+                            <p class="text-normal">Usa el coeficiente de Jaccard comparando las 5 categorías más frecuentes de cada revisor con las de cada libro que no ha leído</p>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
     </div>
 
 </div>

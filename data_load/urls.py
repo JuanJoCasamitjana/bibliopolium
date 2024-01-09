@@ -3,7 +3,7 @@ from django.urls import path
 from .views import  home, stats, ficha_libro, load_tags, list_tags, load_books_of_tag, delete_all_books, load_reviewers, list_reviews
 from .views import  load_full_reviews, review_details, reviewer_details, list_reviewers, load_book_tags, list_books_without_categories
 from .views import list_by_category, load_menu, update_review_and_book, load_whoosh_index, instructions, load_recommendation
-from .views import recommend_book
+from .views import recommend_book, login_admin, logout_admin
 urlpatterns = [
     path('ficha-libro/<int:id>', ficha_libro, name="ficha_libro"),
     path('stats/', stats, name="stats"),
@@ -26,5 +26,7 @@ urlpatterns = [
     path('instructions/', instructions, name="instructions"),
     path('load-recommendation/', load_recommendation, name="load_recommendation"),
     path('reviewer-recommend/<int:id>', recommend_book, name="recommend_book"),
+    path('log-in/', login_admin, name="login_admin"),
+    path('log-out/', logout_admin, name="logout_admin"),
     path('', home, name="home")
 ]

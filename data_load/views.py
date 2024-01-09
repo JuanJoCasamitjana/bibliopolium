@@ -15,6 +15,9 @@ from whoosh import qparser
 from whoosh.index import open_dir
 from .recommendations import load_similarities, recommend_books, top_categories_reviewer
 import shelve
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 directory='./schema_index'
@@ -58,6 +61,7 @@ def stats(request):
     total['Books'] = Book.objects.count()
     total['Reviews'] = Review.objects.count()
     total['Reviewers'] = Reviewer.objects.count()
+    total['Categories'] = Category.objects.count()
     return render(request, 'stats.html', {'total':total})
 
 
@@ -67,6 +71,7 @@ def ficha_libro(request, id):
     
     return render(request, 'ficha_libro.html', {'book':book, 'alike':alike})
 
+@login_required(login_url='login_admin')
 def load_tags(request):
     tag_list = get_tags()
     all_tags_url = Category.objects.values_list('url', flat=True)
@@ -101,6 +106,7 @@ def list_tags(request):
         'book_count':count_all_books,
         })
 
+@login_required(login_url='login_admin')
 def load_books_of_tag(request):
     if request.method == 'POST':
         form = LoadOfTagForm(request.POST)
@@ -119,10 +125,12 @@ def load_books_of_tag(request):
         form = LoadOfTagForm()
         return render(request, 'form.html', {'form':form})
 
+@login_required(login_url='login_admin')
 def delete_all_books(request):
     Book.objects.all().delete()
     return redirect('home')
 
+@login_required(login_url='login_admin')
 def load_reviewers(request):
     if request.method == 'POST':
         form = LoadReviewersForm(request.POST)
@@ -173,6 +181,7 @@ def list_reviews(request):
 
     return render(request, 'review_list.html', {'reviews': reviews})
 
+@login_required(login_url='login_admin')
 def load_full_reviews(request):
     if request.method == 'POST':
         form = LoadReviewsForm(request.POST)
@@ -211,6 +220,7 @@ def list_reviewers(request):
         reviewers.append(details)
     return render(request, 'reviewer_list.html', {'reviewers':reviewers})
 
+@login_required(login_url='login_admin')
 def load_book_tags(request):
     if request.method == 'POST':
         form = LoadBookTagsForm(request.POST)
@@ -234,14 +244,16 @@ def list_by_category(request, id):
     books = category.book_set.all()
     return render(request, 'books_of_category.html', {'books':books, 'category': category})
 
+@login_required(login_url='login_admin')
 def load_menu(request):
     return render(request,'load_menu.html')
 
+@login_required(login_url='login_admin')
 def update_review_and_book(request, id):
     review = get_object_or_404(Review, pk=id)
     get_review(review.url)
     return redirect('review_details', id=id)
-
+@login_required(login_url='login_admin')
 def load_whoosh_index(request):
     if not os.path.exists(directory):
         os.mkdir(directory)
@@ -274,6 +286,7 @@ def load_whoosh_index(request):
 def instructions(request):
     return render(request, 'instructions.html')
 
+@login_required(login_url='login_admin')
 def load_recommendation(request):
     load_similarities()
     return redirect('home')
@@ -282,3 +295,20 @@ def recommend_book(request, id):
     reviewer = Reviewer.objects.get(pk=id)
     books = recommend_books(reviewer)
     return render(request, 'recommended_books.html', {'books':books, 'reviewer': reviewer})
+
+def login_admin(request):
+    form = AuthenticationForm()
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        user=request.POST['username']
+        passw=request.POST['password']
+        auth=authenticate(username=user,password=passw)
+        if auth:
+            login(request, auth)
+            return redirect('home')
+    return render(request, 'form.html', {'form':form})
+
+@login_required(login_url='login_admin')
+def logout_admin(request):
+    logout(request)
+    return redirect('home')
